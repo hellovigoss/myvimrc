@@ -1,0 +1,25 @@
+#!/usr/bin/expect
+set local_path    "/Users/yedai/Work/branches/2015-04-17-个性化推送"
+set remote_path   "/var/www/website_yedai"
+set user   "root"
+set pass   "k\$BNIsyK@Wfs"
+set host   "172.16.154.106"
+set port   "22"
+
+
+set arg1    [lindex $argv 0]
+set arg2    [lindex $argv 1]
+set arg3    [lindex $argv 2]
+
+if { $arg1 == "upload" } {
+	spawn scp -P $port $local_path/$arg2/$arg3 $user@$host:$remote_path/$arg2/$arg3
+	expect "password"
+	send "$pass\n"
+	expect eof
+}
+if { $arg1 == "download" } {
+	spawn scp -P $port $user@$host:$remote_path/$arg2/$arg3 $local_path/$arg2/$arg3 
+	expect "password"
+	send "$pass\n"
+	expect eof
+}
